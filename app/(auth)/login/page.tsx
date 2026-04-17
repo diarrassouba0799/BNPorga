@@ -51,7 +51,7 @@ export default function LoginPage() {
       {/* Logo */}
       <div className="text-center mb-8">
         <div className="inline-flex items-center justify-center w-16 h-16 bg-[#009B4E] rounded-2xl mb-4">
-          <span className="text-white font-bold text-xl">BNP</span>
+          <span><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2yj9HjruLJALs2Ph8SXzD7l8pzycG0_ToAg&s" alt="BPN_Logo" /></span>
         </div>
         <h1 className="text-2xl font-bold text-gray-900">BNP Paribas</h1>
         <p className="text-sm text-gray-500 mt-1">Banque en ligne sécurisée</p>
@@ -93,7 +93,7 @@ export default function LoginPage() {
               </Button>
             </form>
             <p className="text-xs text-gray-400 text-center mt-4">
-              Démo : {MOCK_CREDENTIALS.email} / {MOCK_CREDENTIALS.password}
+              
             </p>
           </>
         ) : (
@@ -111,7 +111,7 @@ export default function LoginPage() {
               <Input
                 label="Code de vérification (6 chiffres)"
                 type="text"
-                placeholder="123456"
+                placeholder="•• •• ••"
                 maxLength={6}
                 value={code2fa}
                 onChange={(e) => setCode2fa(e.target.value)}
@@ -130,7 +130,7 @@ export default function LoginPage() {
                 ← Retour
               </button>
             </form>
-            <p className="text-xs text-gray-400 text-center mt-4">Code démo : {MOCK_CREDENTIALS.code2fa}</p>
+            
           </>
         )}
       </div>
