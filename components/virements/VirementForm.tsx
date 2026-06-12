@@ -6,11 +6,17 @@ import Button from '@/components/ui/Button'
 import { useAuthStore } from '@/store/useAuthStore'
 import { formatMontant } from '@/lib/utils'
 import { verifierCodeVirement } from '@/lib/auth'
+import { useLangueStore } from '@/store/useLangueStore'
+import { t } from '@/lib/i18n'
+
 
 type Etape = 'formulaire' | 'confirmation' | '2fa' | 'succes'
 
+// 🔧 TEST : 5 secondes au lieu de 48h — remettre 48 * 60 * 60 * 1000 en production
+const DELAI_CREDIT = 5 * 1000
+
 function Compte48h({ dateEnvoi }: { dateEnvoi: number }) {
-  const dateCible = dateEnvoi + 48 * 60 * 60 * 1000
+  const dateCible = dateEnvoi + DELAI_CREDIT
   const [restant, setRestant] = useState(dateCible - Date.now())
 
   useEffect(() => {
@@ -45,6 +51,8 @@ export default function VirementForm() {
     ajouterTransaction,
     ajouterVirementEnCours,
   } = useAuthStore()
+
+  const { langue } = useLangueStore()
 
   const [etape, setEtape] = useState<Etape>('formulaire')
   const [form, setForm] = useState({
@@ -113,7 +121,7 @@ export default function VirementForm() {
       montant: montantNum,
       motif: form.motif,
       dateEnvoi: maintenant,
-      dateCreditPrevue: maintenant + 48 * 60 * 60 * 1000,
+      dateCreditPrevue: maintenant + DELAI_CREDIT, // 🔧 TEST : 5s
     })
 
     if (estInhabituel) {
@@ -135,12 +143,12 @@ export default function VirementForm() {
     return (
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-8 space-y-5">
         <div className="text-center space-y-3">
-          <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto">
-            <CheckCircle size={36} className="text-[#003189]" />
+          <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto">
+            <CheckCircle size={36} className="text-emerald-700" />
           </div>
-          <h3 className="text-lg font-semibold text-gray-900">Virement envoye !</h3>
+          <h3 className="text-lg font-semibold text-gray-900">{t('virement_envoye', langue)}</h3>
           <p className="text-gray-500 text-sm">
-            {formatMontant(montantNum)} debites vers{' '}
+            {formatMontant(montantNum)} {t('debites_vers', langue)}{' '}
             <strong>{form.beneficiaire}</strong>
           </p>
           <p className="text-xs text-gray-400 bg-gray-50 rounded-lg px-4 py-2 font-mono">
@@ -152,7 +160,7 @@ export default function VirementForm() {
           <div className="flex items-center gap-2">
             <Clock size={18} className="text-amber-600" />
             <p className="font-semibold text-amber-900 text-sm">
-              Credit prevu dans
+              {t('credit_prevu', langue)}
             </p>
           </div>
           <div className="text-2xl text-center py-2">
@@ -168,9 +176,9 @@ export default function VirementForm() {
         </div>
 
         <div className="bg-gray-50 rounded-lg p-3 space-y-1 text-xs text-gray-500">
-          <p>Solde debite immediatement</p>
-          <p>Transaction enregistree dans votre historique</p>
-          <p>Credit sur le compte beneficiaire : sous 48h ouvrees</p>
+          <p>{t('solde_debite', langue)}</p>
+          <p>{t('transaction_enregistree', langue)}</p>
+          <p>{t('credit_48h', langue)}</p>
         </div>
 
         <Button
@@ -183,7 +191,7 @@ export default function VirementForm() {
             setErrors({})
           }}
         >
-          Nouveau virement
+          {t('nouveau_virement', langue)}
         </Button>
       </div>
     )
@@ -198,9 +206,9 @@ export default function VirementForm() {
             <Shield size={20} className="text-[#003189]" />
           </div>
           <div>
-            <h3 className="font-semibold text-gray-900">Confirmation par SMS</h3>
+            <h3 className="font-semibold text-gray-900">{t('validation_requise', langue)}</h3>
             <p className="text-xs text-gray-500">
-              Code envoye au +33 6 xx xx xx 42
+              {t('code_transmis', langue)}
             </p>
           </div>
         </div>
@@ -230,7 +238,7 @@ export default function VirementForm() {
         <form onSubmit={handleValider2FA} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1.5">
-              Code de confirmation (6 chiffres)
+              {t('code_autorisation', langue)}
             </label>
             <input
               type="text"
@@ -252,14 +260,14 @@ export default function VirementForm() {
             disabled={code2fa.length !== 6 || loading}
             className="w-full bg-[#003189] hover:bg-[#002070] disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-3 rounded-xl transition-colors"
           >
-            {loading ? 'Validation...' : 'Confirmer le virement'}
+            {loading ? 'Validation...' : t('autoriser_virement', langue)}
           </button>
           <button
             type="button"
             onClick={() => setEtape('confirmation')}
             className="w-full text-sm text-gray-400 hover:text-gray-600 py-1"
           >
-            Retour
+            {t('retour', langue)}
           </button>
         </form>
 
@@ -272,17 +280,17 @@ export default function VirementForm() {
     return (
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 space-y-5">
         <h3 className="font-semibold text-gray-900 pb-4 border-b border-gray-100">
-          Confirmer le virement
+          {t('confirmer_virement', langue)}
         </h3>
         <div className="flex items-center justify-between bg-gray-50 rounded-xl p-4">
           <div>
-            <p className="text-xs text-gray-400 mb-0.5">De</p>
+            <p className="text-xs text-gray-400 mb-0.5">{t('de', langue)}</p>
             <p className="font-medium text-sm">Compte Courant</p>
             <p className="text-xs text-gray-500">{formatMontant(solde)} disponible</p>
           </div>
           <ArrowRight size={20} className="text-gray-400" />
           <div className="text-right">
-            <p className="text-xs text-gray-400 mb-0.5">Vers</p>
+            <p className="text-xs text-gray-400 mb-0.5">{t('vers', langue)}</p>
             <p className="font-medium text-sm">{form.beneficiaire}</p>
             <p className="text-xs text-gray-500 font-mono">
               {form.iban.slice(0, 12)}...
@@ -310,13 +318,13 @@ export default function VirementForm() {
             onClick={() => setEtape('formulaire')}
             className="flex-1 border border-gray-300 text-gray-700 font-medium py-2.5 rounded-xl hover:bg-gray-50 transition-colors"
           >
-            Modifier
+            {t('modifier', langue)}
           </button>
           <button
             onClick={() => setEtape('2fa')}
             className="flex-1 bg-[#003189] hover:bg-[#002070] text-white font-medium py-2.5 rounded-xl transition-colors"
           >
-            Continuer
+            {t('continuer', langue)}
           </button>
         </div>
       </div>
@@ -327,7 +335,7 @@ export default function VirementForm() {
   return (
     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
       <div className="mb-6 pb-4 border-b border-gray-100">
-        <h3 className="font-semibold text-gray-900">Emettre un virement</h3>
+        <h3 className="font-semibold text-gray-900">{t('emettre_virement', langue)}</h3>
         <p className="text-xs text-gray-500 mt-0.5">
           Solde disponible :{' '}
           <span className="font-semibold text-[#003189]">
@@ -337,21 +345,21 @@ export default function VirementForm() {
       </div>
       <form onSubmit={handleSoumettre} className="space-y-5">
         <Input
-          label="Nom du beneficiaire"
-          placeholder="Jean Martin"
+          label={t('nom_beneficiaire', langue)}
+          placeholder={langue === 'it' ? 'Mario Rossi' : 'Jean Martin'}
           value={form.beneficiaire}
           onChange={(e) => setForm({ ...form, beneficiaire: e.target.value })}
           error={errors.beneficiaire}
         />
         <Input
-          label="IBAN"
+          label={t('iban', langue)}
           placeholder="FR76 3000 4028 3798 ..."
           value={form.iban}
           onChange={(e) => setForm({ ...form, iban: e.target.value })}
           error={errors.iban}
         />
         <Input
-          label="Montant (EUR)"
+          label={t('montant', langue)}
           type="number"
           placeholder="0.00"
           min="0.01"
@@ -361,22 +369,22 @@ export default function VirementForm() {
           error={errors.montant}
         />
         <Input
-          label="Motif (facultatif)"
+          label={langue === 'it' ? 'Causale (facoltativa)' : 'Motif (facultatif)'}
           placeholder="Remboursement restaurant..."
           value={form.motif}
           onChange={(e) => setForm({ ...form, motif: e.target.value })}
         />
-        <div className="flex gap-2 bg-blue-50 border border-blue-100 rounded-lg p-3">
-          <AlertCircle size={15} className="text-[#003189] flex-shrink-0 mt-0.5" />
-          <p className="text-xs text-[#003189]">
+        <div className="flex gap-2 bg-blue-50 border border-emerald-100 rounded-lg p-3">
+          <AlertCircle size={15} className="text-[#007A4D] flex-shrink-0 mt-0.5" />
+          <p className="text-xs text-[#007A4D]">
             Verifiez l'IBAN avant de valider. Les virements sont definitifs.
           </p>
         </div>
         <button
           type="submit"
-          className="w-full bg-[#003189] hover:bg-[#002070] text-white font-medium py-3 rounded-xl transition-colors"
+          className="w-full bg-[#007A4D] hover:bg-[#005A38] text-white font-medium py-3 rounded-xl transition-colors"
         >
-          Verifier le virement
+          {t('verifier_virement', langue)}
         </button>
       </form>
     </div>

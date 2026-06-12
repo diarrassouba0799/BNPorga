@@ -1,3 +1,4 @@
+'use client'
 import Topbar from '@/components/layout/Topbar'
 import SoldeCardDynamic from '@/components/dashboard/SoldeCardDynamic'
 import RecentTransactions from '@/components/dashboard/RecentTransactions'
@@ -5,23 +6,29 @@ import AlerteSecurite from '@/components/dashboard/AlerteSecurite'
 import { mockTransactions } from '@/lib/data'
 import { Send, PiggyBank, FileText, HelpCircle } from 'lucide-react'
 import Link from 'next/link'
-
-const actions = [
-  { label: 'Virer', icon: Send, href: '/virements', color: 'bg-blue-50 text-blue-600' },
-  { label: 'Epargner', icon: PiggyBank, href: '/dashboard', color: 'bg-purple-50 text-purple-600' },
-  { label: 'Releves', icon: FileText, href: '/transactions', color: 'bg-amber-50 text-amber-600' },
-  { label: 'Aide', icon: HelpCircle, href: '/dashboard', color: 'bg-gray-100 text-gray-600' },
-]
+import { useLangueStore } from '@/store/useLangueStore'
+import { t } from '@/lib/i18n'
 
 export default function DashboardPage() {
+  const { langue } = useLangueStore()
+
+  const actions = [
+    { label: t('virer', langue), icon: Send, href: '/virements', color: 'bg-green-50 text-[#009B4E]' },
+    { label: t('epargner', langue), icon: PiggyBank, href: '/dashboard', color: 'bg-emerald-50 text-emerald-600' },
+    { label: t('releves', langue), icon: FileText, href: '/transactions', color: 'bg-amber-50 text-amber-600' },
+    { label: t('aide', langue), icon: HelpCircle, href: '/dashboard', color: 'bg-gray-100 text-gray-600' },
+  ]
+
   return (
     <div>
-      <Topbar title="Bonjour, Christian Durand" />
+      <Topbar title={`${t('bonjour', langue)}, Davila`} />
       <div className="p-6 max-w-4xl mx-auto space-y-5">
         <AlerteSecurite />
         <SoldeCardDynamic />
         <div>
-          <h2 className="text-sm font-semibold text-gray-700 mb-3">Actions rapides</h2>
+          <h2 className="text-sm font-semibold text-gray-700 mb-3">
+            {t('actions_rapides', langue)}
+          </h2>
           <div className="grid grid-cols-4 gap-3">
             {actions.map(({ label, icon: Icon, href, color }) => (
               <Link
@@ -32,7 +39,7 @@ export default function DashboardPage() {
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center ${color}`}>
                   <Icon size={18} />
                 </div>
-                <span className="text-xs font-medium text-gray-700">{label}</span>
+                <span className="text-xs font-medium text-gray-700 text-center">{label}</span>
               </Link>
             ))}
           </div>

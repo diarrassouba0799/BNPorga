@@ -8,16 +8,19 @@ import {
 import { useAuthStore } from '@/store/useAuthStore'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
+import { useLangueStore } from '@/store/useLangueStore'
+import { t } from '@/lib/i18n'
 
 export default function ParametresClient() {
   const router = useRouter()
   const { user, avatar, logout, setAvatar, updateUser } = useAuthStore()
+  const { langue } = useLangueStore()
   const fileRef = useRef<HTMLInputElement>(null)
 
-  const [prenom, setPrenom] = useState(user?.prenom || '')
-  const [nom, setNom] = useState(user?.nom || '')
-  const [email, setEmail] = useState(user?.email || '')
-  const [telephone, setTelephone] = useState('+33 6 12 34 56 78')
+  const [prenom, setPrenom] = useState(user?.prenom || 'Davila Mariana')
+  const [nom, setNom] = useState(user?.nom || 'Bousset')
+  const [email, setEmail] = useState(user?.email || 'davilamarianabousset@gmail.com')
+  const [telephone, setTelephone] = useState('+33 7 80 97 42 02')
   const [saved, setSaved] = useState(false)
 
   const [notifVirement, setNotifVirement] = useState(true)
@@ -87,7 +90,7 @@ export default function ParametresClient() {
 
       {/* Photo de profil */}
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-        <h2 className="font-semibold text-gray-900 mb-5">Photo de profil</h2>
+        <h2 className="font-semibold text-gray-900 mb-5">{t('photo_profil', langue)}</h2>
         <div className="flex items-center gap-5">
           <div className="relative">
             <div className="w-20 h-20 rounded-full overflow-hidden bg-[#009B4E]/10 flex items-center justify-center">
@@ -115,7 +118,7 @@ export default function ParametresClient() {
               onClick={() => fileRef.current?.click()}
               className="text-xs text-[#009B4E] hover:underline mt-1.5 block"
             >
-              Changer la photo
+              {t('changer_photo', langue)}
             </button>
           </div>
           <input
@@ -130,30 +133,30 @@ export default function ParametresClient() {
 
       {/* Informations personnelles */}
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-        <h2 className="font-semibold text-gray-900 mb-5">Informations personnelles</h2>
+        <h2 className="font-semibold text-gray-900 mb-5">{t('infos_perso', langue)}</h2>
         <form onSubmit={handleSaveProfil} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <Input
-              label="Prénom"
+              label={t('prenom', langue)}
               value={prenom}
               onChange={(e) => setPrenom(e.target.value)}
               icon={<User size={15} />}
             />
             <Input
-              label="Nom"
+              label={t('nom', langue)}
               value={nom}
               onChange={(e) => setNom(e.target.value)}
             />
           </div>
           <Input
-            label="Adresse e-mail"
+            label={t('email', langue)}
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             icon={<Mail size={15} />}
           />
           <Input
-            label="Téléphone"
+            label={t('telephone', langue)}
             type="tel"
             value={telephone}
             onChange={(e) => setTelephone(e.target.value)}
@@ -161,8 +164,8 @@ export default function ParametresClient() {
           />
           <Button type="submit" size="md">
             {saved
-              ? <><Check size={15} className="mr-1.5" /> Sauvegardé</>
-              : 'Enregistrer les modifications'
+              ? <><Check size={15} className="mr-1.5" /> {t('sauvegarde', langue)}</>
+              : t('enregistrer', langue)
             }
           </Button>
         </form>
@@ -170,7 +173,7 @@ export default function ParametresClient() {
 
       {/* Sécurité */}
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-        <h2 className="font-semibold text-gray-900 mb-1">Sécurité</h2>
+        <h2 className="font-semibold text-gray-900 mb-1">{t('securite', langue)}</h2>
         <p className="text-xs text-gray-400 mb-5">Changez votre mot de passe régulièrement</p>
         <form onSubmit={handleChangePass} className="space-y-4">
           <div className="relative">
@@ -215,7 +218,7 @@ export default function ParametresClient() {
             </p>
           )}
           <Button type="submit" variant="secondary">
-            Changer le mot de passe
+            {t('changer_mdp', langue)}
           </Button>
         </form>
       </div>
@@ -224,25 +227,25 @@ export default function ParametresClient() {
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
         <h2 className="font-semibold text-gray-900 mb-5">
           <Bell size={16} className="inline mr-2 text-gray-500" />
-          Notifications
+          {t('notifications', langue)}
         </h2>
         <div className="space-y-4">
           {[
             {
-              label: 'Alertes virements',
-              desc: 'Notifié à chaque virement effectué',
+              label: t('alerte_virement', langue),
+              desc: t('notif_virement_desc', langue),
               value: notifVirement,
               onChange: () => setNotifVirement(!notifVirement),
             },
             {
-              label: 'Alertes de connexion',
-              desc: "Notifié lors d'une nouvelle connexion",
+              label: t('alerte_connexion', langue),
+              desc: t('notif_connexion_desc', langue),
               value: notifConnexion,
               onChange: () => setNotifConnexion(!notifConnexion),
             },
             {
-              label: 'Offres et promotions',
-              desc: 'Recevoir les offres BNP Paribas',
+              label: t('offres_promos', langue),
+              desc: t('notif_promo_desc', langue),
               value: notifPromo,
               onChange: () => setNotifPromo(!notifPromo),
             },
@@ -263,13 +266,13 @@ export default function ParametresClient() {
 
       {/* Déconnexion */}
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-        <h2 className="font-semibold text-gray-900 mb-1">Session</h2>
+        <h2 className="font-semibold text-gray-900 mb-1">{t('session', langue)}</h2>
         <p className="text-xs text-gray-400 mb-4">
-          Connecté en tant que <strong>{user?.email}</strong>
+          {t('connecte_en_tant_que', langue)} <strong>{user?.email}</strong>
         </p>
         <Button variant="danger" onClick={handleLogout} className="w-full">
           <LogOut size={16} className="mr-2" />
-          Se déconnecter
+          {t('se_deconnecter', langue)}
         </Button>
       </div>
 
