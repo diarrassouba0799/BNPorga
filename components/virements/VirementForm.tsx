@@ -12,8 +12,8 @@ import { t } from '@/lib/i18n'
 
 type Etape = 'formulaire' | 'confirmation' | '2fa' | 'succes'
 
-// 🔧 TEST : 5 secondes au lieu de 48h — remettre 48 * 60 * 60 * 1000 en production
-const DELAI_CREDIT = 5 * 1000
+// 🔧 TEST : 5 secondes au lieu de 72h — remettre 72 * 60 * 60 * 1000 en production
+const DELAI_CREDIT = 72 * 60 * 60 * 1000
 
 function Compte48h({ dateEnvoi }: { dateEnvoi: number }) {
   const dateCible = dateEnvoi + DELAI_CREDIT

