@@ -55,7 +55,7 @@ export const traductions = {
   credit_prevu: { fr: 'Credit prevu dans', it: 'Accredito previsto tra' },
   solde_debite: { fr: 'Solde debite immediatement', it: 'Saldo addebitato immediatamente' },
   transaction_enregistree: { fr: 'Transaction enregistree dans votre historique', it: 'Transazione registrata nella cronologia' },
-  credit_48h: { fr: 'Credit sur le compte beneficiaire : sous 48h ouvrees', it: 'Accredito sul conto beneficiario: entro 48 ore lavorative' },
+  credit_48h: { fr: 'Credit sur le compte beneficiaire : sous 48h ouvrees', it: 'Accredito sul conto beneficiario: entro 72 ore lavorative' },
   de: { fr: 'De', it: 'Da' },
   vers: { fr: 'Vers', it: 'Verso' },
   beneficiaire: { fr: 'Beneficiaire', it: 'Beneficiario' },

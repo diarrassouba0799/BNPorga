@@ -171,7 +171,7 @@ export default function VirementForm() {
           </div>
           <p className="text-xs text-amber-700 text-center">
             Le virement sera credite sur le compte de{' '}
-            <strong>{form.beneficiaire}</strong> dans les 48 heures.
+            <strong>{form.beneficiaire}</strong> dans les 72 heures.
           </p>
         </div>
 
